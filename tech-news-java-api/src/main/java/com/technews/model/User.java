@@ -3,7 +3,7 @@ package com.technews.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import javax.xml.stream.events.Comment;
+//import javax.xml.stream.events.Comment;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -13,8 +13,6 @@ import java.util.Objects;
 @Table(name = "user")
 public class User implements Serializable {
 
-    @Transient
-    boolean loggedIn;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -22,6 +20,9 @@ public class User implements Serializable {
     @Column(unique = true)
     private String email;
     private String password;
+    @Transient
+    boolean loggedIn;
+
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Post> posts;
 
@@ -111,14 +112,7 @@ public class User implements Serializable {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return isLoggedIn() == user.isLoggedIn() &&
-                Objects.equals(getId(), user.getId()) &&
-                Objects.equals(getUsername(), user.getUsername()) &&
-                Objects.equals(getEmail(), user.getEmail()) &&
-                Objects.equals(getPassword(), user.getPassword()) &&
-                Objects.equals(getPosts(), user.getPosts()) &&
-                Objects.equals(getVotes(), user.getVotes()) &&
-                Objects.equals(getComments(), user.getComments());
+        return isLoggedIn() == user.isLoggedIn() && Objects.equals(getId(), user.getId()) && Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getPosts(), user.getPosts()) && Objects.equals(getVotes(), user.getVotes()) && Objects.equals(getComments(), user.getComments());
     }
 
     @Override
